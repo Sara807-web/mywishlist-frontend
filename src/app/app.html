@@ -14,8 +14,17 @@
   </div>
   <ul>
     @for (wish of wishes(); track wish.id) {
-    <li>{{ wish.name }} – {{ wish.price }} €</li>
-    }
+    <li>
+      {{ wish.name }} – {{ wish.price }} €
+
+      <button type="button" (click)="toggleBought(wish)">
+        @if (wish.bought) {
+        Als nicht gekauft markieren
+        } @else {
+        Als gekauft markieren
+        }
+      </button>
+    </li> }
   </ul>
 
 </main>

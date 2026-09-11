@@ -19,4 +19,7 @@ export class WishService {
       price: price,
     });
   }
+  updateWish(wish: Wish): Observable<Wish> {
+    return this.http.put<Wish>(`${this.apiUrl}/${wish.id}`, wish);
+  }
 }
