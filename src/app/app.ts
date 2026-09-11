@@ -10,7 +10,7 @@ import { Wish } from './wish';
 export class App {
   wishes = signal<Wish[]>([]);
 
-  constructor(private wishService: WishService) {}
+  constructor(private wishService: WishService) { }
 
   ngOnInit(): void {
     this.wishService.getWishes().subscribe((wishes) => {
@@ -30,11 +30,19 @@ export class App {
       bought: !wish.bought,
     };
 
+
     this.wishService.updateWish(changedWish).subscribe((updatedWish) => {
       this.wishes.update((wishes) =>
         wishes.map((currentWish) =>
           currentWish.id === updatedWish.id ? updatedWish : currentWish,
         ),
+      );
+    });
+  }
+  deleteWish(id: number): void {
+    this.wishService.deleteWish(id).subscribe(() => {
+      this.wishes.update((wishes) =>
+        wishes.filter((wish) => wish.id !== id),
       );
     });
   }

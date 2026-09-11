@@ -22,4 +22,7 @@ export class WishService {
   updateWish(wish: Wish): Observable<Wish> {
     return this.http.put<Wish>(`${this.apiUrl}/${wish.id}`, wish);
   }
+  deleteWish(id: number): Observable<Wish> {
+    return this.http.delete<Wish>(`${this.apiUrl}/${id}`);
+  }
 }
