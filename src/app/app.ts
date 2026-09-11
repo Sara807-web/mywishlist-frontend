@@ -9,6 +9,7 @@ import { Wish } from './wish';
 })
 export class App {
   wishes = signal<Wish[]>([]);
+  errorMessage = signal('');
 
   constructor(private wishService: WishService) { }
 
@@ -17,12 +18,30 @@ export class App {
       this.wishes.set(wishes);
     });
   }
+addWish(name: string, price: string): void {
+  const cleanedName = name.trim();
+  const numericPrice = Number(price);
 
-  addWish(name: string, price: string): void {
-    this.wishService.createWish(name, Number(price)).subscribe((newWish) => {
-      this.wishes.update((wishes) => [...wishes, newWish]);
-    });
+  if (cleanedName === '') {
+    this.errorMessage.set('Bitte gib einen Wunsch ein.');
+    return;
   }
+
+  if (
+    price.trim() === '' ||
+    !Number.isFinite(numericPrice) ||
+    numericPrice < 0
+  ) {
+    this.errorMessage.set('Bitte gib einen gültigen Preis ein.');
+    return;
+  }
+
+  this.errorMessage.set('');
+
+  this.wishService.createWish(cleanedName, numericPrice).subscribe((newWish) => {
+    this.wishes.update((wishes) => [...wishes, newWish]);
+  });
+}
 
   toggleBought(wish: Wish): void {
     const changedWish = {

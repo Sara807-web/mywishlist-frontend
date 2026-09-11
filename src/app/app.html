@@ -12,6 +12,10 @@
       Wunsch hinzufügen
     </button>
   </div>
+  @if (errorMessage()) {
+  <p>{{ errorMessage() }}</p>
+  }
+
   <ul>
     @for (wish of wishes(); track wish.id) {
     <li>
