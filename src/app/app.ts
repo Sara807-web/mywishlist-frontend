@@ -10,11 +10,18 @@ import { Wish } from './wish';
 export class App {
   wishes = signal<Wish[]>([]);
 
-  constructor(private wishService: WishService) {}
+  constructor(private wishService: WishService) { }
 
   ngOnInit(): void {
     this.wishService.getWishes().subscribe((wishes) => {
       this.wishes.set(wishes);
+
+    });
+
+  }
+  addWish(name: string, price: string): void {
+    this.wishService.createWish(name, Number(price)).subscribe((newWish) => {
+      this.wishes.update((wishes) => [...wishes, newWish]);
     });
   }
 }

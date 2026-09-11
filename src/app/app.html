@@ -1,10 +1,21 @@
 <main>
   <h1>MyWishlist 🎁</h1>
   <p>Meine persönliche Wunschliste</p>
+  <div>
+    <label for="wish-name">Wunsch:</label>
+    <input #nameInput id="wish-name" type="text" />
+
+    <label for="wish-price">Preis:</label>
+    <input #priceInput id="wish-price" type="number" min="0" step="0.01" />
+
+    <button type="button" (click)="addWish(nameInput.value, priceInput.value)">
+      Wunsch hinzufügen
+    </button>
+  </div>
   <ul>
-  @for (wish of wishes(); track wish.id) {
+    @for (wish of wishes(); track wish.id) {
     <li>{{ wish.name }} – {{ wish.price }} €</li>
-  }
-</ul>
+    }
+  </ul>
 
 </main>

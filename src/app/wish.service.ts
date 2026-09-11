@@ -12,4 +12,11 @@ export class WishService {
   getWishes(): Observable<Wish[]> {
     return this.http.get<Wish[]>(this.apiUrl);
   }
+
+  createWish(name: string, price: number): Observable<Wish> {
+    return this.http.post<Wish>(this.apiUrl, {
+      name: name,
+      price: price,
+    });
+  }
 }
