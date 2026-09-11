@@ -1,4 +1,10 @@
 <main>
   <h1>MyWishlist 🎁</h1>
   <p>Meine persönliche Wunschliste</p>
+  <ul>
+  @for (wish of wishes(); track wish.id) {
+    <li>{{ wish.name }} – {{ wish.price }} €</li>
+  }
+</ul>
+
 </main>
