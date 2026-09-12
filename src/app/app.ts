@@ -10,6 +10,7 @@ import { Wish } from './wish';
 export class App {
   wishes = signal<Wish[]>([]);
   errorMessage = signal('');
+  editingWishId = signal<number | null>(null);
 
   constructor(private wishService: WishService) {}
 
@@ -65,6 +66,59 @@ export class App {
     });
   }
 
+  startEditing(id: number): void {
+    this.editingWishId.set(id);
+    this.errorMessage.set('');
+  }
+
+  cancelEditing(): void {
+    this.editingWishId.set(null);
+  }
+  saveWish(wish: Wish, name: string, price: string, priority: string): void {
+    const cleanedName = name.trim();
+    const numericPrice = Number(price);
+    if (cleanedName === '') {
+      this.errorMessage.set('Bitte gib einen Wunsch ein.');
+      return;
+    }
+    if (price.trim() === '' || !Number.isFinite(numericPrice) || numericPrice < 0) {
+      this.errorMessage.set('Bitte gib einen gültigen Preis ein.');
+      return;
+    }
+    if (priority !== 'high' && priority !== 'low') {
+      this.errorMessage.set('Bitte wähle eine gültige Priorität aus.');
+      return;
+    }
+    const changedWish: Wish = {
+      ...wish,
+      name: cleanedName,
+      price: numericPrice,
+      priority: priority,
+    };
+
+    this.errorMessage.set('');
+    this.wishService.updateWish(changedWish).subscribe({
+      next: (updatedWish) => {
+        this.wishes.update((wishes) =>
+          wishes
+            .map((currentWish) => (currentWish.id === updatedWish.id ? updatedWish : currentWish))
+            .sort((firstWish, secondWish) => {
+              if (firstWish.priority === secondWish.priority) {
+                return firstWish.id - secondWish.id;
+              }
+
+              return firstWish.priority === 'high' ? -1 : 1;
+            }),
+        );
+
+        this.editingWishId.set(null);
+        this.errorMessage.set('');
+      },
+      error: () => {
+        this.errorMessage.set('Der Wunsch konnte nicht gespeichert werden.');
+      },
+    });
+  }
   toggleBought(wish: Wish): void {
     const changedWish = {
       ...wish,
