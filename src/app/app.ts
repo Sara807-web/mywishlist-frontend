@@ -79,6 +79,14 @@ export class App {
     });
   }
   deleteWish(id: number): void {
+    const shouldDelete = window.confirm(
+      'Möchtest du diesen Wunsch wirklich löschen?',
+    );
+
+    if (!shouldDelete) {
+      return;
+    }
+
     this.wishService.deleteWish(id).subscribe({
       next: () => {
         this.wishes.update((wishes) =>
