@@ -11,7 +11,7 @@ export class App {
   wishes = signal<Wish[]>([]);
   errorMessage = signal('');
 
-  constructor(private wishService: WishService) { }
+  constructor(private wishService: WishService) {}
 
   ngOnInit(): void {
     this.wishService.getWishes().subscribe({
@@ -26,7 +26,7 @@ export class App {
       },
     });
   }
-  addWish(name: string, price: string): void {
+  addWish(name: string, price: string, priority: string): void {
     const cleanedName = name.trim();
     const numericPrice = Number(price);
 
@@ -35,20 +35,28 @@ export class App {
       return;
     }
 
-    if (
-      price.trim() === '' ||
-      !Number.isFinite(numericPrice) ||
-      numericPrice < 0
-    ) {
+    if (price.trim() === '' || !Number.isFinite(numericPrice) || numericPrice < 0) {
       this.errorMessage.set('Bitte gib einen gültigen Preis ein.');
+      return;
+    }
+    if (priority !== 'high' && priority !== 'low') {
+      this.errorMessage.set('Bitte wähle eine gültige Priorität aus.');
       return;
     }
 
     this.errorMessage.set('');
 
-    this.wishService.createWish(cleanedName, numericPrice).subscribe({
+    this.wishService.createWish(cleanedName, numericPrice, priority).subscribe({
       next: (newWish) => {
-        this.wishes.update((wishes) => [...wishes, newWish]);
+        this.wishes.update((wishes) =>
+          [...wishes, newWish].sort((firstWish, secondWish) => {
+            if (firstWish.priority === secondWish.priority) {
+              return firstWish.id - secondWish.id;
+            }
+
+            return firstWish.priority === 'high' ? -1 : 1;
+          }),
+        );
         this.errorMessage.set('');
       },
       error: () => {
@@ -62,7 +70,6 @@ export class App {
       ...wish,
       bought: !wish.bought,
     };
-
 
     this.wishService.updateWish(changedWish).subscribe({
       next: (updatedWish) => {
@@ -79,9 +86,7 @@ export class App {
     });
   }
   deleteWish(id: number): void {
-    const shouldDelete = window.confirm(
-      'Möchtest du diesen Wunsch wirklich löschen?',
-    );
+    const shouldDelete = window.confirm('Möchtest du diesen Wunsch wirklich löschen?');
 
     if (!shouldDelete) {
       return;
@@ -89,9 +94,7 @@ export class App {
 
     this.wishService.deleteWish(id).subscribe({
       next: () => {
-        this.wishes.update((wishes) =>
-          wishes.filter((wish) => wish.id !== id),
-        );
+        this.wishes.update((wishes) => wishes.filter((wish) => wish.id !== id));
         this.errorMessage.set('');
       },
       error: () => {

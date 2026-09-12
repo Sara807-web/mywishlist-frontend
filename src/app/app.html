@@ -7,45 +7,68 @@
     <input #nameInput class="form-control mb-3" id="wish-name" type="text" />
 
     <label class="form-label" for="wish-price">Preis:</label>
-    <input #priceInput class="form-control mb-3" id="wish-price" type="number" min="0" step="0.01" />
+    <input
+      #priceInput
+      class="form-control mb-3"
+      id="wish-price"
+      type="number"
+      min="0"
+      step="0.01"
+    />
+    <label class="form-label" for="wish-priority">Priorität:</label>
+    <select #priorityInput class="form-select mb-3" id="wish-priority">
+      <option value="high">Sehr dringend</option>
+      <option value="low" selected>Eher nicht so dringend</option>
+    </select>
 
-    <button class="btn btn-primary" type="button" (click)="addWish(nameInput.value, priceInput.value)">
+    <button
+      class="btn btn-primary"
+      type="button"
+      (click)="addWish(nameInput.value, priceInput.value, priorityInput.value)"
+    >
       Wunsch hinzufügen
     </button>
   </div>
 
   @if (errorMessage()) {
-  <div class="alert alert-danger" role="alert">
-    {{ errorMessage() }}
-  </div>
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage() }}
+    </div>
   }
 
   <ul class="list-group">
     @for (wish of wishes(); track wish.id) {
-    <li class="list-group-item d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-      <div>
-        <strong>{{ wish.name }} – {{ wish.price }} €</strong>
-
-        @if (wish.bought) {
-        <span class="badge text-bg-success ms-2">Gekauft</span>
-        } @else {
-        <span class="badge text-bg-secondary ms-2">Offen</span>
-        }
-      </div>
-      <div class="d-flex flex-wrap gap-2">
-        <button class="btn btn-outline-success btn-sm" type="button" (click)="toggleBought(wish)">
-          @if (wish.bought) {
-          Als nicht gekauft markieren
+      <li
+        class="list-group-item d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3"
+      >
+        <div>
+          <strong>{{ wish.name }} – {{ wish.price }} €</strong>
+          @if (wish.priority === 'high') {
+            <span class="badge text-bg-danger ms-2">Sehr dringend</span>
           } @else {
-          Als gekauft markieren
+            <span class="badge text-bg-info ms-2">Eher nicht so dringend</span>
           }
-        </button>
 
-        <button class="btn btn-outline-danger btn-sm" type="button" (click)="deleteWish(wish.id)">
-          Löschen
-        </button>
-      </div>
-    </li>
+          @if (wish.bought) {
+            <span class="badge text-bg-success ms-2">Gekauft</span>
+          } @else {
+            <span class="badge text-bg-secondary ms-2">Offen</span>
+          }
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn-outline-success btn-sm" type="button" (click)="toggleBought(wish)">
+            @if (wish.bought) {
+              Als nicht gekauft markieren
+            } @else {
+              Als gekauft markieren
+            }
+          </button>
+
+          <button class="btn btn-outline-danger btn-sm" type="button" (click)="deleteWish(wish.id)">
+            Löschen
+          </button>
+        </div>
+      </li>
     }
   </ul>
 </main>

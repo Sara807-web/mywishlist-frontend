@@ -13,10 +13,11 @@ export class WishService {
     return this.http.get<Wish[]>(this.apiUrl);
   }
 
-  createWish(name: string, price: number): Observable<Wish> {
+  createWish(name: string, price: number, priority: 'high' | 'low'): Observable<Wish> {
     return this.http.post<Wish>(this.apiUrl, {
       name: name,
       price: price,
+      priority: priority,
     });
   }
   updateWish(wish: Wish): Observable<Wish> {

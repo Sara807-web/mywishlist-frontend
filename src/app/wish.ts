@@ -3,4 +3,5 @@ export interface Wish {
   name: string;
   price: number;
   bought: boolean;
+  priority: 'high' | 'low';
 }
