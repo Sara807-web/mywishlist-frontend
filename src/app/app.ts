@@ -11,6 +11,8 @@ export class App {
   wishes = signal<Wish[]>([]);
   errorMessage = signal('');
   isLoading = signal(true);
+  isAddFormOpen = signal(false);
+  isWishListOpen = signal(false);
   editingWishId = signal<number | null>(null);
 
   constructor(private wishService: WishService) {}
@@ -31,6 +33,16 @@ export class App {
       },
     });
   }
+
+  toggleAddForm(): void {
+    this.isAddFormOpen.update((isOpen) => !isOpen);
+    this.errorMessage.set('');
+  }
+
+  toggleWishList(): void {
+    this.isWishListOpen.update((isOpen) => !isOpen);
+  }
+
   addWish(
     nameInput: HTMLInputElement,
     priceInput: HTMLInputElement,

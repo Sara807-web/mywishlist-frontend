@@ -1,2 +1,20 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
-/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --wishlist-purple: #7c3aed;
+  --wishlist-pink: #ec4899;
+  --wishlist-dark: #3b2447;
+  --wishlist-surface: rgba(255, 255, 255, 0.88);
+  --wishlist-border: rgba(124, 58, 237, 0.15);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--wishlist-dark);
+  background:
+    radial-gradient(circle at top left, #fce7f3 0, transparent 38%),
+    radial-gradient(circle at top right, #ede9fe 0, transparent 42%),
+    linear-gradient(135deg, #fff7fb, #f7f2ff);
+  background-attachment: fixed;
+}
