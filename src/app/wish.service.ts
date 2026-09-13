@@ -3,11 +3,12 @@ import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Wish } from './wish';
+import { environment } from '../environments/environment';
 
 @Service()
 export class WishService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/wishes';
+  private readonly apiUrl = environment.apiUrl;
 
   getWishes(): Observable<Wish[]> {
     return this.http.get<Wish[]>(this.apiUrl);
