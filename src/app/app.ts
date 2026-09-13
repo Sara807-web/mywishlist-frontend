@@ -10,6 +10,7 @@ import { Wish } from './wish';
 export class App {
   wishes = signal<Wish[]>([]);
   errorMessage = signal('');
+  isLoading = signal(true);
   editingWishId = signal<number | null>(null);
 
   constructor(private wishService: WishService) {}
@@ -18,9 +19,12 @@ export class App {
     this.wishService.getWishes().subscribe({
       next: (wishes) => {
         this.wishes.set(wishes);
+        this.isLoading.set(false);
         this.errorMessage.set('');
       },
+
       error: () => {
+        this.isLoading.set(false);
         this.errorMessage.set(
           'Die Wünsche konnten nicht geladen werden. Ist das Backend gestartet?',
         );

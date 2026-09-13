@@ -29,13 +29,20 @@
       Wunsch hinzufügen
     </button>
   </div>
-
+  @if (isLoading()) {
+    <div class="d-flex align-items-center gap-2 mb-4" role="status">
+      <div class="spinner-border text-primary" aria-hidden="true"></div>
+      <span>Wünsche werden geladen …</span>
+    </div>
+  }
   @if (errorMessage()) {
     <div class="alert alert-danger" role="alert">
       {{ errorMessage() }}
     </div>
   }
-
+  @if (!isLoading() && wishes().length === 0 && errorMessage() === '') {
+    <div class="alert alert-info" role="status">Deine Wunschliste ist noch leer.</div>
+  }
   <ul class="list-group">
     @for (wish of wishes(); track wish.id) {
       <li
