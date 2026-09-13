@@ -31,8 +31,14 @@ export class App {
       },
     });
   }
-  addWish(name: string, price: string, priority: string): void {
-    const cleanedName = name.trim();
+  addWish(
+    nameInput: HTMLInputElement,
+    priceInput: HTMLInputElement,
+    priorityInput: HTMLSelectElement,
+  ): void {
+    const cleanedName = nameInput.value.trim();
+    const price = priceInput.value;
+    const priority = priorityInput.value;
     const numericPrice = Number(price);
 
     if (cleanedName === '') {
@@ -62,6 +68,11 @@ export class App {
             return firstWish.priority === 'high' ? -1 : 1;
           }),
         );
+
+        nameInput.value = '';
+        priceInput.value = '';
+        priorityInput.value = 'low';
+
         this.errorMessage.set('');
       },
       error: () => {
