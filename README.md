@@ -1,59 +1,97 @@
-# MywishlistFrontend
+# MyWishlist Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.4.
+Das Frontend von MyWishlist ist eine responsive Angular-Anwendung zur Verwaltung einer persönlichen Wunschliste.
 
-## Development server
+## Funktionen
 
-To start a local development server, run:
+- Wünsche anzeigen
+- neue Wünsche mit Name, Preis und Priorität hinzufügen
+- vorhandene Wünsche bearbeiten
+- Wünsche als gekauft oder nicht gekauft markieren
+- Wünsche nach Bestätigung löschen
+- sehr dringende Wünsche zuerst anzeigen
+- Eingaben validieren und verständliche Fehlermeldungen anzeigen
+- Lade- und Leerzustände darstellen
+- responsive Darstellung für Desktop und mobile Bildschirmgrößen
 
-```bash
-ng serve
-```
+## Verwendete Technologien
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular
+- TypeScript
+- HTML
+- CSS
+- Bootstrap
+- Vitest
+- Git und GitHub
 
-## Code scaffolding
+## Voraussetzungen
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Für die lokale Ausführung werden benötigt:
 
-```bash
-ng generate component component-name
-```
+- Node.js
+- npm
+- das separat gestartete MyWishlist-Backend
+- eine laufende PostgreSQL-Datenbank
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Installation
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Repository klonen und Abhängigkeiten installieren:
 
 ```bash
-ng test
+git clone https://github.com/Sara807-web/mywishlist-frontend.git
+cd mywishlist-frontend
+npm install
 ```
 
-## Running end-to-end tests
+## Anwendung starten
 
-For end-to-end (e2e) testing, run:
+Zuerst müssen die PostgreSQL-Datenbank und das Backend gestartet werden.
+
+Danach das Frontend starten:
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Die Anwendung ist anschließend unter folgender Adresse erreichbar:
 
-## Additional Resources
+```text
+http://localhost:4200
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Tests ausführen
+
+```bash
+npm test -- --watch=false
+```
+
+## API-Konfiguration
+
+Während der lokalen Entwicklung verwendet das Frontend diese Backend-Adresse:
+
+```text
+http://localhost:3000/wishes
+```
+
+Die Konfiguration befindet sich in:
+
+```text
+src/environments/environment.ts
+```
+
+## Projektstruktur
+
+```text
+src/app/app.ts            Komponentenlogik
+src/app/app.html          Benutzeroberfläche
+src/app/app.css           Design der Hauptkomponente
+src/app/wish.ts           Wish-Datentyp
+src/app/wish.service.ts   Kommunikation mit dem Backend
+src/styles.css            globale Gestaltung und Bootstrap
+```
+
+## Backend
+
+Das zugehörige Backend befindet sich in einem separaten Repository:
+
+https://github.com/Sara807-web/mywishlist-backend
