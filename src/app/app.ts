@@ -10,15 +10,21 @@ import { Wish } from './wish';
 export class App {
   wishes = signal<Wish[]>([]);
   searchTerm = signal('');
+  statusFilter = signal<'all' | 'open' | 'bought'>('all');
 
   filteredWishes = computed(() => {
     const search = this.searchTerm().trim().toLowerCase();
+    const status = this.statusFilter();
 
-    if (search === '') {
-      return this.wishes();
-    }
+    return this.wishes().filter((wish) => {
+      const matchesSearch = wish.name.toLowerCase().includes(search);
+      const matchesStatus =
+        status === 'all' ||
+        (status === 'open' && !wish.bought) ||
+        (status === 'bought' && wish.bought);
 
-    return this.wishes().filter((wish) => wish.name.toLowerCase().includes(search));
+      return matchesSearch && matchesStatus;
+    });
   });
   errorMessage = signal('');
   isLoading = signal(true);
@@ -26,7 +32,7 @@ export class App {
   isWishListOpen = signal(false);
   editingWishId = signal<number | null>(null);
 
-  constructor(private wishService: WishService) { }
+  constructor(private wishService: WishService) {}
 
   ngOnInit(): void {
     this.wishService.getWishes().subscribe({
