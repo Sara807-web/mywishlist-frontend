@@ -95,3 +95,12 @@ src/styles.css            globale Gestaltung und Bootstrap
 Das zugehörige Backend befindet sich in einem separaten Repository:
 
 https://github.com/Sara807-web/mywishlist-backend
+
+## Verwendete KI-Werkzeuge
+
+Bei der Entwicklung dieses Projekts wurden folgende KI-Werkzeuge verwendet:
+
+- **OpenAI Codex/ChatGPT:** Unterstützung bei der schrittweisen Planung und Entwicklung, bei Codeerklärungen, Fehlersuche, Testfällen, Git-Arbeit und der Vorbereitung der Dokumentation.
+- **OpenAI-Bildgenerierung:** Erstellung des individuellen Wishlist-Bildes für die Startseite.
+
+Alle verwendeten Codebestandteile wurden während der Entwicklung getestet. Der Aufbau und die Funktionsweise der Anwendung werden für das abschließende Fachgespräch eigenständig nachvollzogen und vorbereitet.
