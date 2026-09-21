@@ -43,5 +43,12 @@ describe('App', () => {
 
     expect(compiled.querySelector('.list-group')).toBeTruthy();
   });
+  it('should format wish prices in German format', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    expect(app.formatPrice(149.99)).toBe('149,99');
+    expect(app.formatPrice(24)).toBe('24,00');
+  });
 
 });
