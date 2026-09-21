@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { WishService } from './wish.service';
 import { Wish } from './wish';
 
@@ -9,13 +9,24 @@ import { Wish } from './wish';
 })
 export class App {
   wishes = signal<Wish[]>([]);
+  searchTerm = signal('');
+
+  filteredWishes = computed(() => {
+    const search = this.searchTerm().trim().toLowerCase();
+
+    if (search === '') {
+      return this.wishes();
+    }
+
+    return this.wishes().filter((wish) => wish.name.toLowerCase().includes(search));
+  });
   errorMessage = signal('');
   isLoading = signal(true);
   isAddFormOpen = signal(false);
   isWishListOpen = signal(false);
   editingWishId = signal<number | null>(null);
 
-  constructor(private wishService: WishService) {}
+  constructor(private wishService: WishService) { }
 
   ngOnInit(): void {
     this.wishService.getWishes().subscribe({
@@ -184,9 +195,9 @@ export class App {
     });
   }
   formatPrice(price: number): string {
-  return price.toLocaleString('de-DE', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-}
+    return price.toLocaleString('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
 }

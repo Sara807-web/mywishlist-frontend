@@ -50,6 +50,17 @@
   }
 
   @if (isWishListOpen()) {
+    <div class="mb-3">
+  <label class="form-label" for="wish-search">Wünsche durchsuchen:</label>
+  <input
+    #searchInput
+    class="form-control"
+    id="wish-search"
+    type="search"
+    placeholder="Name des Wunsches eingeben"
+    (input)="searchTerm.set(searchInput.value)"
+  />
+</div>
   @if (isLoading()) {
   <div class="d-flex align-items-center gap-2 mb-4" role="status">
     <div class="spinner-border text-primary" aria-hidden="true"></div>
@@ -60,7 +71,12 @@
   <div class="alert alert-info" role="status">Deine Wunschliste ist noch leer.</div>
   }
   <ul class="list-group">
-    @for (wish of wishes(); track wish.id) {
+    @if (!isLoading() && wishes().length > 0 && filteredWishes().length === 0) {
+  <div class="alert alert-info" role="status">
+    Keine passenden Wünsche gefunden.
+  </div>
+}
+    @for (wish of filteredWishes(); track wish.id) {
     <li class="list-group-item d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
       @if (editingWishId() === wish.id) {
       <div class="w-100">
