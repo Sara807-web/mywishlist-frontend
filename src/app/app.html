@@ -61,6 +61,28 @@
   }
 
   @if (isWishListOpen()) {
+    <div class="row g-2 mb-3 text-center">
+      <div class="col-12 col-sm-4">
+        <div class="card card-body py-2">
+          <strong>{{ totalWishCount() }}</strong>
+          <span>Alle Wünsche</span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-4">
+        <div class="card card-body py-2">
+          <strong>{{ openWishCount() }}</strong>
+          <span>Offen</span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-4">
+        <div class="card card-body py-2">
+          <strong>{{ boughtWishCount() }}</strong>
+          <span>Gekauft</span>
+        </div>
+      </div>
+    </div>
     <div class="mb-3">
       <label class="form-label" for="wish-search">Wünsche durchsuchen:</label>
       <input

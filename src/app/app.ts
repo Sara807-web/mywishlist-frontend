@@ -26,6 +26,11 @@ export class App {
       return matchesSearch && matchesStatus;
     });
   });
+  totalWishCount = computed(() => this.wishes().length);
+
+  openWishCount = computed(() => this.wishes().filter((wish) => !wish.bought).length);
+
+  boughtWishCount = computed(() => this.wishes().filter((wish) => wish.bought).length);
   errorMessage = signal('');
   isLoading = signal(true);
   isAddFormOpen = signal(false);
