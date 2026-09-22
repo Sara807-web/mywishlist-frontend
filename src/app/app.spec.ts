@@ -50,30 +50,61 @@ describe('App', () => {
     expect(app.formatPrice(149.99)).toBe('149,99');
     expect(app.formatPrice(24)).toBe('24,00');
   });
-it('should filter wishes by name', () => {
-  const fixture = TestBed.createComponent(App);
-  const app = fixture.componentInstance;
+  it('should filter wishes by name', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
 
-  app.wishes.set([
-    {
-      id: 1,
-      name: 'Kamera',
-      price: 499.99,
-      bought: false,
-      priority: 'high',
-    },
-    {
-      id: 2,
-      name: 'Kochbuch',
-      price: 24.99,
-      bought: false,
-      priority: 'low',
-    },
-  ]);
+    app.wishes.set([
+      {
+        id: 1,
+        name: 'Kamera',
+        price: 499.99,
+        bought: false,
+        priority: 'high',
+      },
+      {
+        id: 2,
+        name: 'Kochbuch',
+        price: 24.99,
+        bought: false,
+        priority: 'low',
+      },
+    ]);
 
-  app.searchTerm.set('kamera');
+    app.searchTerm.set('kamera');
 
-  expect(app.filteredWishes()).toHaveLength(1);
-  expect(app.filteredWishes()[0].name).toBe('Kamera');
-});
+    expect(app.filteredWishes()).toHaveLength(1);
+    expect(app.filteredWishes()[0].name).toBe('Kamera');
+  });
+  it('should filter wishes by bought status', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.wishes.set([
+      {
+        id: 1,
+        name: 'Kamera',
+        price: 499.99,
+        bought: false,
+        priority: 'high',
+      },
+      {
+        id: 2,
+        name: 'Kochbuch',
+        price: 24.99,
+        bought: true,
+        priority: 'low',
+      },
+    ]);
+
+    app.statusFilter.set('bought');
+
+    expect(app.filteredWishes()).toHaveLength(1);
+    expect(app.filteredWishes()[0].name).toBe('Kochbuch');
+
+    app.statusFilter.set('open');
+
+    expect(app.filteredWishes()).toHaveLength(1);
+    expect(app.filteredWishes()[0].name).toBe('Kamera');
+  });
 });
