@@ -107,4 +107,36 @@ describe('App', () => {
     expect(app.filteredWishes()).toHaveLength(1);
     expect(app.filteredWishes()[0].name).toBe('Kamera');
   });
+  it('should calculate wish status statistics', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.wishes.set([
+      {
+        id: 1,
+        name: 'Kamera',
+        price: 499.99,
+        bought: false,
+        priority: 'high',
+      },
+      {
+        id: 2,
+        name: 'Kochbuch',
+        price: 24.99,
+        bought: true,
+        priority: 'low',
+      },
+      {
+        id: 3,
+        name: 'Konzertticket',
+        price: 75,
+        bought: false,
+        priority: 'high',
+      },
+    ]);
+
+    expect(app.totalWishCount()).toBe(3);
+    expect(app.openWishCount()).toBe(2);
+    expect(app.boughtWishCount()).toBe(1);
+  });
 });
