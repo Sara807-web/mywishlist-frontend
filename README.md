@@ -2,6 +2,20 @@
 
 Das Frontend von MyWishlist ist eine responsive Angular-Anwendung zur Verwaltung einer persönlichen Wunschliste.
 
+## Screenshots
+
+### Startseite
+
+![Startseite von MyWishlist](docs/screenshots/startseite.png)
+
+### Wunsch hinzufügen
+
+![Formular zum Hinzufügen eines Wunsches](docs/screenshots/formular.png)
+
+### Wunschliste
+
+![Wunschliste mit Suche, Filtern und Statistik](docs/screenshots/wunschliste.png)
+
 ## Funktionen
 
 - Wünsche anzeigen
