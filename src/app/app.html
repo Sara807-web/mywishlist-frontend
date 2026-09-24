@@ -5,7 +5,13 @@
     <p class="lead mb-4">Meine persönliche Wunschliste</p>
 
     <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-      <button class="add-button btn btn-lg" type="button" (click)="toggleAddForm()">
+      <button
+        class="add-button btn btn-lg"
+        type="button"
+        [attr.aria-expanded]="isAddFormOpen()"
+        aria-controls="add-wish-form"
+        (click)="toggleAddForm()"
+      >
         @if (isAddFormOpen()) {
           Formular schließen
         } @else {
@@ -13,7 +19,13 @@
         }
       </button>
 
-      <button class="list-button btn btn-lg" type="button" (click)="toggleWishList()">
+      <button
+        class="list-button btn btn-lg"
+        type="button"
+        [attr.aria-expanded]="isWishListOpen()"
+        aria-controls="wish-list"
+        (click)="toggleWishList()"
+      >
         @if (isWishListOpen()) {
           Wunschliste schließen
         } @else {
@@ -24,7 +36,7 @@
   </section>
 
   @if (isAddFormOpen()) {
-    <div class="wish-form card card-body shadow-sm mb-4">
+    <div id="add-wish-form" class="wish-form card card-body shadow-sm mb-4">
       <label class="form-label" for="wish-name">Wunsch:</label>
       <input #nameInput class="form-control mb-3" id="wish-name" type="text" />
 
@@ -132,7 +144,7 @@
     @if (!isLoading() && wishes().length === 0 && errorMessage() === '') {
       <div class="alert alert-info" role="status">Deine Wunschliste ist noch leer.</div>
     }
-    <ul class="list-group">
+    <ul id="wish-list" class="list-group">
       @if (!isLoading() && wishes().length > 0 && filteredWishes().length === 0) {
         <div class="alert alert-info" role="status">Keine passenden Wünsche gefunden.</div>
       }
